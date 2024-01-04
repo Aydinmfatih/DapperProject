@@ -1,0 +1,34 @@
+﻿@model List<DapperProject.Dtos.ResultProjectDto>
+@{
+    Layout = null;
+}
+<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+<div class="container">
+    <br />
+    <br />
+    <table class="table table-hover">
+        <tr>
+            <th>#</th>
+            <th>Başlık</th>
+            <th>Gün</th>
+            <th>Fiyat</th>
+            <th>Açıklama</th>
+            <th>Sil</th>
+            <th>Güncelle</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ProjectID</td>
+                <td>@item.Title</td>
+                <td>@item.CompleteDay</td>
+                <td>@item.Price</td>
+                <td>@item.Description</td>
+                <td><a href="/Default/DeleteProject/@item.ProjectID" class="btn btn-outline-danger">Sil</a></td>
+                <td><a href="/Default/UpdateProject/@item.ProjectID" class="btn btn-outline-success">Güncelle</a></td>
+            </tr>
+        }
+    </table>
+    <a href="/Default/CreateProject" class="btn btn-primary">Ekle </a>
+</div>
