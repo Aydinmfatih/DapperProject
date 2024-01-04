@@ -29,14 +29,24 @@ namespace DapperProject.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateProject(CreateProjectDto model)
         {
-            string query = "insert into Project (Title,Description,ProjectCategory,CompleteDay,Price) Values (@title,@description,@projectCategory,@completeDay,@price) ";
+            string query = $"insert into Project (Title,Description,ProjectCategory,CompleteDay,Price) Values (@title,@description,@projectCategory,@completeDay,@price) ";
              var parameters = new DynamicParameters();
             parameters.Add("@title", model.Title);
             parameters.Add("@description", model.Description);
             parameters.Add("@price", model.Price);
             parameters.Add("@projectCategory", model.ProjectCategory);
             parameters.Add("@completeDay", model.CompleteDay);
-            return View();
+            var connection = _context.CreateConnection();
+            await connection.ExecuteAsync(query, parameters);
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> DeleteProject(int id)
+        {
+            string query = $"delete From Project where ProjectID ={id}";
+            var connection = _context.CreateConnection();
+            await connection.ExecuteAsync(query);
+            return RedirectToAction("Index");
         }
     }
 }
